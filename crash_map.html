@@ -33,6 +33,8 @@
 
 var showBySeverity = false;
 var markers = [];
+
+// I really should have used arrays for these flags! They just kept growing. Oh well.
 var showTruck = true;
 var showMotorcycle = true;
 var showPedestrian = true;
@@ -45,7 +47,18 @@ var showHospital = true;
 var showMedical = true;
 var showProperty = true;
 var showUnknown = true;
-    
+
+var show10kmh = true;
+var show30kmh = true;
+var show40kmh = true;
+var show50kmh = true;
+var show60kmh = true;
+var show70kmh = true;
+var show80kmh = true;
+var show90kmh = true;
+var show100kmh = true;
+var show110kmh = true;
+
 var map;
 
 function addMarker(i, map, infowindow)
@@ -171,6 +184,58 @@ function toggleUnknown()
   updateVisibility();
 }
 
+function toggle10kmh()
+{
+  show10kmh = !show10kmh;
+  updateVisibility();
+}
+
+function toggle30kmh()
+{
+  show30kmh = !show30kmh;
+  updateVisibility();
+}
+function toggle40kmh()
+{
+  show40kmh = !show40kmh;
+  updateVisibility();
+}
+function toggle50kmh()
+{
+  show50kmh = !show50kmh;
+  updateVisibility();
+}
+function toggle60kmh()
+{
+  show60kmh = !show60kmh;
+  updateVisibility();
+}
+function toggle70kmh()
+{
+  show70kmh = !show70kmh;
+  updateVisibility();
+}
+function toggle80kmh()
+{
+  show80kmh = !show80kmh;
+  updateVisibility();
+}
+function toggle90kmh()
+{
+  show90kmh = !show90kmh;
+  updateVisibility();
+}
+function toggle100kmh()
+{
+  show100kmh = !show100kmh;
+  updateVisibility();
+}
+function toggle110kmh()
+{
+  show110kmh = !show110kmh;
+  updateVisibility();
+}
+
 function showSeverityIcons()
 {
   showBySeverity = true;
@@ -256,6 +321,34 @@ function updateVisibility()
     else // bike only - we stripped out this column
        visible = showBikeOnly;
 
+    if (!visible)
+    {
+      markers[i].set('map', null);
+      continue;
+    }
+    
+    // hacky method for seeing if it starts with that substring
+    if (data[i][14] == '10') // 10km/h
+       visible = show10kmh;
+    else if (data[i][14] == '30')
+       visible = show30kmh;
+    else if (data[i][14] == '40')
+       visible = show40kmh;
+    else if (data[i][14] == '50' || data[i][14] == '51') // dataset includes 51 zones...
+       visible = show50kmh;
+    else if (data[i][14] == '60')
+       visible = show60kmh;
+    else if (data[i][14] == '70')
+       visible = show70kmh;
+    else if (data[i][14] == '80')
+       visible = show80kmh;
+    else if (data[i][14] == '90')
+       visible = show90kmh;
+    else if (data[i][14] == '100')
+       visible = show100kmh;
+    else if (data[i][14] == '110')
+       visible = show110kmh;
+       
     if (visible)
       markers[i].set('map', map);
     else
@@ -312,6 +405,18 @@ google.maps.event.addDomListener(window, 'load', initialize);
       <button onclick="toggleMedical()"     id="btnMedical">Toggle medical</button>
       <button onclick="toggleProperty()"    id="btnProperty">Toggle property</button>
       <button onclick="toggleUnknown()"     id="btnUnknown">Toggle unknown</button>
+      <p>
+      Toggle by speed limit:
+      <button onclick="toggle10kmh()"       >10km/h</button>
+      <button onclick="toggle30kmh()"       >30km/h</button>
+      <button onclick="toggle40kmh()"       >40km/h</button>
+      <button onclick="toggle50kmh()"       >50km/h</button>
+      <button onclick="toggle60kmh()"       >60km/h</button>
+      <button onclick="toggle70kmh()"       >70km/h</button>
+      <button onclick="toggle80kmh()"       >80km/h</button>
+      <button onclick="toggle90kmh()"       >90km/h</button>
+      <button onclick="toggle100kmh()"      >100km/h</button>
+      <button onclick="toggle110kmh()"      >110km/h</button>
     </div>
     <div id="map-canvas"></div>
   </body>
