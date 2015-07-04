@@ -12,40 +12,44 @@
         margin: 0px;
         padding: 0px
       }
-    </style>
+      #panel {
+        position: absolute;
+        text-align: center;
+        top: 5px;
+        left: 50%;
+        margin-left: -300px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+      </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 
     <!-- this data file contains arrays as produced by the matlab scripts -->
        <script type="text/javascript" src="data.js"></script>
 
     <script>
+
+var showBySeverity = false;
+var markers = [];
+var showTruck = true;
+var showMotorcycle = true;
+var showPedestrian = true;
+var showOther = true;
+var showAnimal = true;
+var showBikeOnly = true;
+
+var showFatal = true;
+var showHospital = true;
+var showMedical = true;
+var showProperty = true;
+var showUnknown = true;
     
+var map;
 
-function initialize() {
-
-  var showBySeverity = 0;
-
-  var mapOptions = {
-    zoom: 10,
-    center: new google.maps.LatLng(-31.9546529,115.852662) // Perth
-  };
-
-  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-  // If you want to use Google's bike layer, uncomment these lines. 
-  // However, their map differs to the DoT in some places (seems to add more routes)
-//  var bikeLayer = new google.maps.BicyclingLayer();
-//  bikeLayer.setMap(map);
-  
-  var contentString = '';
-
-  var infowindow = new google.maps.InfoWindow({
-      content: contentString
-  });
-  
-  for (var i = 0; i < data.length; ++i)
-  {
-  
+function addMarker(i, map, infowindow)
+{
     if (showBySeverity)
     {
       // hacky method for seeing if it starts with that substring
@@ -56,14 +60,13 @@ function initialize() {
       if (data[i][3].lastIndexOf('Medical', 0) === 0)
          var icon_url = 'icons/firstaid.png';
       if (data[i][3].lastIndexOf('Property', 0) === 0)
-         var icon_url = 'icons/symbol-dollar.png';
+         var icon_url = 'icons/symbol_dollar.png';
       if (data[i][3].lastIndexOf('Unknown', 0) === 0)
          var icon_url = 'icons/symbol_inter.png';
     }
     else
     {
-    
-      // hacky method for seeing if it starts with that substring
+      // the fields will be either empty or '1'
       if (data[i][4] != '' || data[i][8] != '') // trucks
          var icon_url = 'icons/truck3.png';
       else if (data[i][5] != '') // motorbike
@@ -82,8 +85,10 @@ function initialize() {
           position: new google.maps.LatLng(data[i][0], data[i][1]),
           map: map,
           title: data[i][2],
-           icon: icon_url
+          icon: icon_url
       });
+      
+      markers.push(marker);
       
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
          return function() {
@@ -98,7 +103,188 @@ function initialize() {
          }
     })(marker, i));      
       
+}
+
+function toggleTruck()
+{
+  showTruck = !showTruck;
+  updateVisibility();
+}
+
+function toggleMotorcycle()
+{
+  showMotorcycle = !showMotorcycle;
+  updateVisibility();
+}
+
+function togglePedestrian()
+{
+  showPedestrian = !showPedestrian;
+  updateVisibility();
+}
+
+function toggleOther()
+{
+  showOther = !showOther;
+  updateVisibility();
+}
+
+
+function toggleBikeOnly()
+{
+  showBikeOnly = !showBikeOnly;
+  updateVisibility();
+}
+
+function toggleFatal()
+{
+  showFatal = !showFatal;
+  updateVisibility();
+}
+
+function toggleHospital()
+{
+  showHospital = !showHospital;
+  updateVisibility();
+}
+
+function toggleMedical()
+{
+  showMedical = !showMedical;
+  updateVisibility();
+}
+
+function toggleProperty()
+{
+  showProperty = !showProperty;
+  updateVisibility();
+}
+
+function toggleUnknown()
+{
+  showUnknown = !showUnknown;
+  updateVisibility();
+}
+
+function showSeverityIcons()
+{
+  showBySeverity = true;
+  
+
+  for (i = 0; i < data.length; ++i)
+  {
+     // hacky method for seeing if it starts with that substring
+      if (data[i][3].lastIndexOf('Fatal', 0) === 0)
+         var icon_url = 'icons/headstone-2.png';
+      if (data[i][3].lastIndexOf('Hospital', 0) === 0)
+         var icon_url = 'icons/ambulance.png';
+      if (data[i][3].lastIndexOf('Medical', 0) === 0)
+         var icon_url = 'icons/firstaid.png';
+      if (data[i][3].lastIndexOf('Property', 0) === 0)
+         var icon_url = 'icons/symbol_dollar.png';
+      if (data[i][3].lastIndexOf('Unknown', 0) === 0)
+         var icon_url = 'icons/symbol_inter.png';  
+      markers[i].set('icon', icon_url); 
+
+      }
+
+}
+
+function showVehicleIcons()
+{
+  showBySeverity = false;
+
+  for (i = 0; i < data.length; ++i)
+  {
+      // the fields will be either empty or '1'
+      if (data[i][4] != '' || data[i][8] != '') // trucks
+         var icon_url = 'icons/truck3.png';
+      else if (data[i][5] != '') // motorbike
+         var icon_url = 'icons/ducati-diavel.png';
+      else if (data[i][6] != '') // pedestrian
+         var icon_url = 'icons/hiking.png';
+      else if (data[i][7] != '') // other
+         var icon_url = 'icons/car.png';
+      else if (data[i][9] != '') // animal
+         var icon_url = 'icons/cow-export.png';
+      else // bike only - we stripped out this column
+         var icon_url = 'icons/cycling.png';
+      markers[i].set('icon', icon_url); 
   }
+}
+
+function updateVisibility()
+{
+  for (i = 0; i < data.length; ++i)
+  {
+    var visible = true;
+    
+    // hacky method for seeing if it starts with that substring
+    if (data[i][3].lastIndexOf('Fatal', 0) === 0)
+       visible = showFatal;
+    if (data[i][3].lastIndexOf('Hospital', 0) === 0)
+       visible = showHospital;
+    if (data[i][3].lastIndexOf('Medical', 0) === 0)
+       visible = showMedical;
+    if (data[i][3].lastIndexOf('Property', 0) === 0)
+       visible = showProperty;
+    if (data[i][3].lastIndexOf('Unknown', 0) === 0)
+       visible = showUnknown;
+    
+    if (!visible)
+    {
+      markers[i].set('map', null);
+      continue;
+    }
+    
+    // hacky method for seeing if it starts with that substring
+    if (data[i][4] != '' || data[i][8] != '') // trucks
+       visible = showTruck;
+    else if (data[i][5] != '') // motorcycle
+       visible = showMotorcycle;
+    else if (data[i][6] != '') // pedestrian
+       visible = showPedestrian;
+    else if (data[i][7] != '') // other
+       visible = showOther;
+    else if (data[i][9] != '') // animal
+       visible = showAnimal;
+    else // bike only - we stripped out this column
+       visible = showBikeOnly;
+
+    if (visible)
+      markers[i].set('map', map);
+    else
+      markers[i].set('map', null);
+  } // end for
+}
+
+function initialize() {
+
+  var mapOptions = {
+    zoom: 10,
+    center: new google.maps.LatLng(-31.9546529,115.852662) // Perth
+  };
+
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+  // If you want to use Google's bike layer, uncomment these lines. 
+  // However, their map differs to the DoT in some places (seems to add more routes)
+//  var bikeLayer = new google.maps.BicyclingLayer();
+//  bikeLayer.setMap(map);
+  
+  var contentString = '';
+
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString
+  });
+  
+  // add the markers.
+  markers = [];
+  for (var i = 0; i < data.length; ++i)
+  {
+    addMarker(i, map, infowindow);
+  }
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -106,6 +292,22 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </script>
   </head>
   <body>
+    <div id="panel">
+      <button onclick="showVehicleIcons()" >View icons by vehicle</button>
+      <button onclick="toggleTruck()"       id="btnTruck">Toggle truck</button>
+      <button onclick="toggleMotorcycle()"  id="btnMotorcycle">Toggle motorcycle</button>
+      <button onclick="togglePedestrian()"  id="btnPedestrian">Toggle pedestrian</button>
+      <button onclick="toggleOther()"       id="btnOther">Toggle other</button>
+      <button onclick="toggleAnimal()"      id="btnAnimal">Toggle animal</button>
+      <button onclick="toggleBikeOnly()"    id="btnBikeOnly">Toggle bike only</button>
+      <p>
+      <button onclick="showSeverityIcons()" >View icons by severity</button>
+      <button onclick="toggleFatal()"       id="btnFatal">Toggle fatal</button>
+      <button onclick="toggleHospital()"    id="btnHospital">Toggle hospital</button>
+      <button onclick="toggleMedical()"     id="btnMedical">Toggle medical</button>
+      <button onclick="toggleProperty()"    id="btnProperty">Toggle property</button>
+      <button onclick="toggleUnknown()"     id="btnUnknown">Toggle unknown</button>
+    </div>
     <div id="map-canvas"></div>
   </body>
 </html>
