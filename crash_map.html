@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<!-- this example based on https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple -->
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Rubber Side Up</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+
+    <!-- this data file contains arrays as produced by the matlab scripts -->
+       <script type="text/javascript" src="data.js"></script>
+
+    <script>
+    
+
+function initialize() {
+
+
+
+  var mapOptions = {
+    zoom: 10,
+    center: new google.maps.LatLng(-31.9546529,115.852662) // Perth
+  };
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+  // If you want to use Google's bike layer, uncomment these lines. 
+  // However, their map differs to the DoT in some places (seems to add more routes)
+//  var bikeLayer = new google.maps.BicyclingLayer();
+//  bikeLayer.setMap(map);
+  
+  var contentString = '';
+
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString
+  });
+
+  for (var i = 0; i < data.length; ++i)
+  {
+      var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(data[i][0], data[i][1]),
+          map: map,
+          title: data[i][2]
+      });
+      
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+         return function() {
+             infowindow.setContent(data[i][2] + '<br>' + data[i][3] + 
+             '<br>' + data[i][10] + 'km to PSP waypoint' + 
+             '<br>' + data[i][11] + 'km to PBN waypoint' + 
+             '<br>' + data[i][12] + 'km to shared path waypoint' +
+             '<br>' + data[i][13] + 
+             '<br>' + data[i][14] + 'km/h'
+             );
+             infowindow.open(map, marker);
+         }
+    })(marker, i));      
+      
+  }
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
