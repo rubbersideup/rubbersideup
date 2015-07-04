@@ -1,0 +1,24 @@
+<OGRVRTDataSource>
+    <OGRVRTLayer name="Road_Hierarchy_mrwa">
+    <SrcDataSource relativeToVRT="1">Road_Hierarchy_mrwa.csv</SrcDataSource>
+    <GeometryType>wkbMultiLineString</GeometryType>
+    <LayerSRS>WGS84</LayerSRS>
+    <GeometryField reportSrcColumn="false" encoding= "WKT" field="WKT"/> 
+      <Field name="ROAD" src="ROAD" type="String" />
+      <Field name="ROAD_NAME" src="ROAD_NAME" type="String" />
+      <Field name="COMMON_USAGE_NAME" src="COMMON_USAGE_NAME" type="String" />
+      <Field name="START_SLK" src="START_SLK" type="Integer" />
+      <Field name="END_SLK" src="END_SLK" type="Integer" />
+      <Field name="CWY" src="CWY" type="String" />
+      <Field name="START_TRUE_DIST" src="START_TRUE_DIST" type="Integer" />
+      <Field name="END_TRUE_DIST" src="END_TRUE_DIST" type="Integer" />
+      <Field name="NETWORK_TYPE" src="NETWORK_TYPE" type="String" />
+      <Field name="RA_NO" src="RA_NO" type="String" />
+      <Field name="RA_NAME" src="RA_NAME" type="String" />
+      <Field name="LG_NO" src="LG_NO" type="String" />
+      <Field name="LG_NAME" src="LG_NAME" type="String" />
+      <Field name="ROAD_HIERARCHY" src="ROAD_HIERARCHY" type="String" />
+      <Field name="ROUTE_NE_ID" src="ROUTE_NE_ID" type="Integer" />
+      <Field name="GEOLOC_Length" src="GEOLOC_Length" type="Integer" />
+    </OGRVRTLayer>
+</OGRVRTDataSource>

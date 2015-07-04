@@ -1,0 +1,26 @@
+<OGRVRTDataSource>
+    <OGRVRTLayer name="Crash_2010_to_2014_mrwa">
+    <SrcDataSource relativeToVRT="1">Crash_2010_to_2014_mrwa.csv</SrcDataSource>
+    <GeometryType>wkbPoint</GeometryType>
+    <LayerSRS>WGS84</LayerSRS>
+    <GeometryField reportSrcColumn="false" encoding= "WKT" field="WKT"/> 
+      <Field name="Year_" src="Year_" type="Integer" />
+      <Field name="Acc_Type" src="Acc_Type" type="String" />
+      <Field name="Severity" src="Severity" type="String" />
+      <Field name="Intx" src="Intx" type="Integer" />
+      <Field name="Intx_Desc" src="Intx_Desc" type="String" />
+      <Field name="Dist_Err" src="Dist_Err" type="Integer" />
+      <Field name="Road_No" src="Road_No" type="String" />
+      <Field name="Road_Name" src="Road_Name" type="String" />
+      <Field name="Common_Road_Name" src="Common_Road_Name" type="String" />
+      <Field name="SLK" src="SLK" type="Integer" />
+      <Field name="Cway" src="Cway" type="String" />
+      <Field name="Total_Truck" src="Total_Truck" type="Integer" />
+      <Field name="Total_Motor_Cycle" src="Total_Motor_Cycle" type="Integer" />
+      <Field name="Total_Pedestrian" src="Total_Pedestrian" type="Integer" />
+      <Field name="Total_Bike" src="Total_Bike" type="Integer" />
+      <Field name="Total_Others_Vehicles" src="Total_Others_Vehicles" type="Integer" />
+      <Field name="Total_Heavy_Truck" src="Total_Heavy_Truck" type="Integer" />
+      <Field name="Total_Animal" src="Total_Animal" type="Integer" />
+    </OGRVRTLayer>
+</OGRVRTDataSource>
