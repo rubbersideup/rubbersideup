@@ -42,13 +42,41 @@ function initialize() {
   var infowindow = new google.maps.InfoWindow({
       content: contentString
   });
-
+  
   for (var i = 0; i < data.length; ++i)
   {
+      // hacky method for seeing if it starts with that substring
+      if (data[i][3].lastIndexOf('Fatal', 0) === 0)
+         var icon_url = 'icons/headstone-2.png';
+      if (data[i][3].lastIndexOf('Hospital', 0) === 0)
+         var icon_url = 'icons/ambulance.png';
+      if (data[i][3].lastIndexOf('Medical', 0) === 0)
+         var icon_url = 'icons/firstaid.png';
+      if (data[i][3].lastIndexOf('Property', 0) === 0)
+         var icon_url = 'icons/symbol-dollar.png';
+      if (data[i][3].lastIndexOf('Unknown', 0) === 0)
+         var icon_url = 'icons/symbol_inter.png';
+/*
+      // hacky method for seeing if it starts with that substring
+      if (data[i][4] != '' || data[i][8] != '') // trucks
+         var icon_url = 'icons/truck3.png';
+      else if (data[i][5] != '') // motorbike
+         var icon_url = 'icons/ducati-diavel.png';
+      else if (data[i][6] != '') // pedestrian
+         var icon_url = 'icons/hiking.png';
+      else if (data[i][7] != '') // other
+         var icon_url = 'icons/car.png';
+      else if (data[i][9] != '') // animal
+         var icon_url = 'icons/cow-export.png';
+      else // bike only - we stripped out this column
+         var icon_url = 'icons/cycling.png';
+         */
+         
       var marker = new google.maps.Marker({
           position: new google.maps.LatLng(data[i][0], data[i][1]),
           map: map,
-          title: data[i][2]
+          title: data[i][2],
+           icon: icon_url
       });
       
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -58,7 +86,7 @@ function initialize() {
              '<br>' + data[i][11] + 'km to PBN waypoint' + 
              '<br>' + data[i][12] + 'km to shared path waypoint' +
              '<br>' + data[i][13] + 
-             '<br>' + data[i][14] + 'km/h'
+             '<br>' + data[i][14] + 'km/h zone'
              );
              infowindow.open(map, marker);
          }
