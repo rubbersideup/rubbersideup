@@ -23,7 +23,7 @@
 
 function initialize() {
 
-
+  var showBySeverity = 0;
 
   var mapOptions = {
     zoom: 10,
@@ -45,6 +45,9 @@ function initialize() {
   
   for (var i = 0; i < data.length; ++i)
   {
+  
+    if (showBySeverity)
+    {
       // hacky method for seeing if it starts with that substring
       if (data[i][3].lastIndexOf('Fatal', 0) === 0)
          var icon_url = 'icons/headstone-2.png';
@@ -56,7 +59,10 @@ function initialize() {
          var icon_url = 'icons/symbol-dollar.png';
       if (data[i][3].lastIndexOf('Unknown', 0) === 0)
          var icon_url = 'icons/symbol_inter.png';
-/*
+    }
+    else
+    {
+    
       // hacky method for seeing if it starts with that substring
       if (data[i][4] != '' || data[i][8] != '') // trucks
          var icon_url = 'icons/truck3.png';
@@ -70,7 +76,7 @@ function initialize() {
          var icon_url = 'icons/cow-export.png';
       else // bike only - we stripped out this column
          var icon_url = 'icons/cycling.png';
-         */
+    }
          
       var marker = new google.maps.Marker({
           position: new google.maps.LatLng(data[i][0], data[i][1]),
