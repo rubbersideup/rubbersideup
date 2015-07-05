@@ -14,6 +14,9 @@ best_psp_dist = zeros(size(crash_lat));
 % path. Loop through each path and find the nearest coordinate. Then we
 % will store the best
 for ii=1:length(crash_lat)
+    if mod(ii,100) == 0
+        fprintf('crash %d\n', ii);
+    end
     this_lat = crash_lat(ii);
     this_long = crash_long(ii);
     
