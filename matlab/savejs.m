@@ -1,11 +1,13 @@
 % Saves the data to js file - for the format, see the ordering of the
-% fields below... sorry :(
+% fields below. I was originalyl just going to save minimal data
+% but fields have ended up being tacked and not necessarily in the same
+% order as the original Main Roads csv... sorry :( 
 
-fp = fopen('data.js', 'w');
+fp = fopen('../data.js', 'w');
 fprintf(fp, 'var data = [\n');
 
 for ii=1:length(crashcsv)
-    fprintf(fp, '[%s,%s,"%s","%s","%s","%s","%s","%s","%s","%s",%.1f,%.1f,%.1f,"%s",%s,"%s"]', ...
+    fprintf(fp, '[%s,%s,"%s","%s","%s","%s","%s","%s","%s","%s",%.1f,%.1f,%.1f,"%s",%s,%s,"%s"]', ...
     crashcsv(ii).Lat, crashcsv(ii).Long_, ...
     crashcsv(ii).Common_Road_Name(crashcsv(ii).Common_Road_Name ~= '"'), ... % no quotes in here
     crashcsv(ii).Severity, ...
@@ -20,6 +22,7 @@ for ii=1:length(crashcsv)
     best_shared_dist(ii), ...
     crashcsv(ii).ROAD_HIERARCHY, ... % access road, distributor etc.
     crashcsv(ii).SPLI_SPEED_LIMIT, ...
+    crashcsv(ii).Year_, ...
     crashcsv(ii).Cway ... % will be S for single, or L/R (left/right)
     );
     if ii ~= length(crashcsv)-1
