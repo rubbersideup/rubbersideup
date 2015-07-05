@@ -221,4 +221,65 @@ ax([1,2]) = [min(hist_bins), max(hist_bins)]; % set to range of hist_bins
 axis(ax);
 print -dpng '../Dist_from_shared.png';
 
-% todo: dump to a csv
+% dump these all to csv files
+fp = fopen('../speed_vs_vehicle.csv','w');
+fprintf(fp, 'Speed');
+for jj=1:length(vehicle_classes)
+    fprintf(fp, ',%s', vehicle_classes{jj});
+end
+fprintf(fp, '\n');
+for ii=1:length(speed_legend)
+    fprintf(fp, '%s', speed_legend{ii});
+    for jj=1:length(vehicle_classes)
+        fprintf(fp, ',%d', speed_vs_vehicle(jj,ii));
+    end
+    fprintf(fp, '\n');
+end
+fclose(fp);
+
+fp = fopen('../speed_vs_severity.csv','w');
+fprintf(fp, 'Speed');
+for jj=1:length(severity_classes)
+    fprintf(fp, ',%s', severity_classes{jj});
+end
+fprintf(fp, '\n');
+for ii=1:length(speed_legend)
+    fprintf(fp, '%s', speed_legend{ii});
+    for jj=1:length(severity_classes)
+        fprintf(fp, ',%d', speed_vs_severity(jj,ii));
+    end
+    fprintf(fp, '\n');
+end
+fclose(fp);
+
+% These are the normed versions
+fp = fopen('../speed_vs_vehicle_normed.csv','w');
+fprintf(fp, 'Speed');
+for jj=1:length(vehicle_classes)
+    fprintf(fp, ',%s', vehicle_classes{jj});
+end
+fprintf(fp, '\n');
+for ii=1:length(speed_legend)
+    fprintf(fp, '%s', speed_legend{ii});
+    for jj=1:length(vehicle_classes)
+        fprintf(fp, ',%.4f', speed_vs_vehicle_normed(jj,ii));
+    end
+    fprintf(fp, '\n');
+end
+fclose(fp);
+
+fp = fopen('../speed_vs_severity_normed.csv','w');
+fprintf(fp, 'Speed');
+for jj=1:length(severity_classes)
+    fprintf(fp, ',%s', severity_classes{jj});
+end
+fprintf(fp, '\n');
+for ii=1:length(speed_legend)
+    fprintf(fp, '%s', speed_legend{ii});
+    for jj=1:length(severity_classes)
+        fprintf(fp, ',%.4f', speed_vs_severity_normed(jj,ii));
+    end
+    fprintf(fp, '\n');
+end
+fclose(fp);
+
