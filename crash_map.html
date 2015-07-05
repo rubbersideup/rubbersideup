@@ -17,11 +17,28 @@
         text-align: center;
         top: 5px;
         left: 50%;
-        margin-left: -300px;
+        margin-left: -360px;
         z-index: 5;
         background-color: #fff;
         padding: 5px;
-        border: 1px solid #999;
+        //border: 1px solid #999;
+      }
+      #title {
+        text-align: left;
+        font-size: 20;
+        top: 5px;
+        background-color: #fff;
+        padding: 5px;
+        //border: 1px solid #999;
+      }
+      #govhack {
+        text-align: right;
+        font-size: 12;
+        top: 5px;
+        margin-left: -360px;
+        background-color: #fff;
+        padding: 5px;
+        //border: 1px solid #999;
       }
       </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
@@ -58,9 +75,11 @@ var show80kmh = true;
 var show90kmh = true;
 var show100kmh = true;
 var show110kmh = true;
+var showunkkmh = true;
 
 var map;
 
+// Adds a marker to the map using the appropriate icon depending on the crash class.
 function addMarker(i, map, infowindow)
 {
     if (showBySeverity)
@@ -105,12 +124,13 @@ function addMarker(i, map, infowindow)
       
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
          return function() {
-             infowindow.setContent(data[i][2] + '<br>' + data[i][3] + 
-             '<br>' + data[i][10] + 'km to PSP waypoint' + 
-             '<br>' + data[i][11] + 'km to PBN waypoint' + 
-             '<br>' + data[i][12] + 'km to shared path waypoint' +
+             infowindow.setContent(data[i][2] + ', ' + data[i][15] +
+             '<br>Severity: ' + data[i][3] + 
+             '<br>' + data[i][10] + 'km to PSP' + 
+             '<br>' + data[i][11] + 'km to PBN' + 
+             '<br>' + data[i][12] + 'km to shared path' +
              '<br>' + data[i][13] + 
-             '<br>' + data[i][14] + 'km/h zone'
+             ', ' + data[i][14] + 'km/h zone'
              );
              infowindow.open(map, marker);
          }
@@ -118,6 +138,7 @@ function addMarker(i, map, infowindow)
       
 }
 
+// These are all button event handlers.
 function toggleTruck()
 {
   showTruck = !showTruck;
@@ -235,7 +256,14 @@ function toggle110kmh()
   show110kmh = !show110kmh;
   updateVisibility();
 }
+function toggleunkkmh()
+{
+  showunkkmh = !showunkkmh;
+  updateVisibility();
+}
 
+
+// Changes the icons used to indicate crash severity.
 function showSeverityIcons()
 {
   showBySeverity = true;
@@ -257,9 +285,9 @@ function showSeverityIcons()
       markers[i].set('icon', icon_url); 
 
       }
-
 }
 
+// changes the icons used to indicate type of other vehicle involved.
 function showVehicleIcons()
 {
   showBySeverity = false;
@@ -283,6 +311,7 @@ function showVehicleIcons()
   }
 }
 
+// Compares the crash classes with the currently visible classes.
 function updateVisibility()
 {
   for (i = 0; i < data.length; ++i)
@@ -348,6 +377,8 @@ function updateVisibility()
        visible = show100kmh;
     else if (data[i][14] == '110')
        visible = show110kmh;
+    else 
+       visible = showunkkmh;
        
     if (visible)
       markers[i].set('map', map);
@@ -356,6 +387,7 @@ function updateVisibility()
   } // end for
 }
 
+// Gets the map up and running
 function initialize() {
 
   var mapOptions = {
@@ -390,6 +422,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </script>
   </head>
   <body>
+  <div id="title"><font size="24">Rubber Side Up</font><br><font size="4"><a href="stats.html">See collated stats here!</a></font></div>
+  <div id="govhack"><font size="6">GovHack 2015</font></div>
     <div id="panel">
       <button onclick="showVehicleIcons()" >View icons by vehicle</button>
       <button onclick="toggleTruck()"       id="btnTruck">Toggle truck</button>
@@ -417,6 +451,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
       <button onclick="toggle90kmh()"       >90km/h</button>
       <button onclick="toggle100kmh()"      >100km/h</button>
       <button onclick="toggle110kmh()"      >110km/h</button>
+      <button onclick="toggleunkkmh()"      >Other</button>
     </div>
     <div id="map-canvas"></div>
   </body>
