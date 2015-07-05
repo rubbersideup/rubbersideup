@@ -401,6 +401,16 @@ function initialize() {
   // However, their map differs to the DoT in some places (seems to add more routes)
 //  var bikeLayer = new google.maps.BicyclingLayer();
 //  bikeLayer.setMap(map);
+
+  var pbnLayer = new google.maps.KmlLayer({
+    url: 'https://rubbersideup.github.io/rubbersideup/data/converted/PBN_routes_for_arc_dgn_Polyl.kmz'
+  });
+  pbnLayer.setMap(map);
+
+  var pspLayer = new google.maps.KmlLayer({
+    url: 'https://rubbersideup.github.io/rubbersideup/data/converted/Principal_Shared_Path_for_ar.kmz'
+  });
+  pspLayer.setMap(map);
   
   var contentString = '';
 
@@ -414,7 +424,6 @@ function initialize() {
   {
     addMarker(i, map, infowindow);
   }
-
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
