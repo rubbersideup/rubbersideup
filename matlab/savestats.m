@@ -222,7 +222,7 @@ axis(ax);
 print -dpng '../Dist_from_shared.png';
 
 % dump these all to csv files
-fp = fopen('../vehicle_vs_speed.csv','w');
+fp = fopen('../speed_vs_vehicle.csv','w');
 fprintf(fp, 'Speed');
 for jj=1:length(vehicle_classes)
     fprintf(fp, ',%s', vehicle_classes{jj});
@@ -237,7 +237,7 @@ for ii=1:length(speed_legend)
 end
 fclose(fp);
 
-fp = fopen('../severity_vs_speed.csv','w');
+fp = fopen('../speed_vs_severity.csv','w');
 fprintf(fp, 'Speed');
 for jj=1:length(severity_classes)
     fprintf(fp, ',%s', severity_classes{jj});
@@ -253,7 +253,7 @@ end
 fclose(fp);
 
 % These are the normed versions
-fp = fopen('../vehicle_vs_speed_normed.csv','w');
+fp = fopen('../speed_vs_vehicle_normed.csv','w');
 fprintf(fp, 'Speed');
 for jj=1:length(vehicle_classes)
     fprintf(fp, ',%s', vehicle_classes{jj});
@@ -268,7 +268,7 @@ for ii=1:length(speed_legend)
 end
 fclose(fp);
 
-fp = fopen('../severity_vs_speed_normed.csv','w');
+fp = fopen('../speed_vs_severity_normed.csv','w');
 fprintf(fp, 'Speed');
 for jj=1:length(severity_classes)
     fprintf(fp, ',%s', severity_classes{jj});
