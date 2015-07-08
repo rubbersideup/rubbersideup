@@ -45,8 +45,8 @@ function [d1km d2km]=lldistkm_dw(latlon1,latlon2)
 
 radius=6371;
 lat1=latlon1(1)*pi/180;
-lat2=latlon2(1)*pi/180;
-lon1=latlon1(:,2)*pi/180;
+lat2=latlon2(:,1)*pi/180;
+lon1=latlon1(2)*pi/180;
 lon2=latlon2(:,2)*pi/180;
 deltaLat=lat2-lat1;
 deltaLon=lon2-lon1;
