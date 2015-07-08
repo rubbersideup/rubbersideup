@@ -189,11 +189,12 @@ hold off
 dist_hist = histc(best_psp_dist, hist_bins);
 bar(hist_bins, dist_hist, 'histc');
 % we get the mean distance of those that fall within this window.
-title({'Crash occurrences by distance from PSP', ...
+title({'Crash occurrences by distance from Principal Shared Paths', ...
 sprintf('Mean distance: %.1fkm', mean(best_psp_dist(best_psp_dist < max(hist_bins))))});
 xlabel('Distance from PSP (km)');
 ylabel('Count');
-ax = [min(hist_bins), max(hist_bins), 0, 250]; % set to range of hist_bins 
+ax = axis;
+ax([1,2]) = [min(hist_bins), max(hist_bins)]; % set to range of hist_bins 
 axis(ax);
 print -dpng '../Dist_from_psp.png';
 
@@ -205,7 +206,7 @@ sprintf('Mean distance: %.1fkm', mean(best_pbn_dist(best_pbn_dist < max(hist_bin
 xlabel('Distance from nearest PBN route (km)');
 ylabel('Count');
 ax = axis;
-ax = [min(hist_bins), max(hist_bins), 0, 250]; % set to range of hist_bins 
+ax([1,2]) = [min(hist_bins), max(hist_bins)]; % set to range of hist_bins 
 axis(ax);
 print -dpng '../Dist_from_pbn.png';
 
@@ -283,3 +284,94 @@ for ii=1:length(speed_legend)
 end
 fclose(fp);
 
+
+% Now look at crash locations: intersection vs midblock, by vehicle type
+intx_crash_inds = strcmp('Intersection', {crashcsv.Acc_Type});
+midblock_crash_inds = strcmp('Midblock', {crashcsv.Acc_Type});
+intx_by_vehicle = [sum(vsvehicle(:, intx_crash_inds), 2), sum(vsvehicle(:, midblock_crash_inds), 2)];
+% Repeat the figures
+bar(intx_by_vehicle, 'stacked');
+title('Crash occurrences by location and vehicle type');
+xlabel('Other vehicle involved');
+% convert the speeds from numbers to a cell array of strings, and use as
+% the tick labels
+set(gca, 'xticklabel', vehicle_classes)
+ylabel('Count');
+legend({'Intersection', 'Midblock'});
+ax = axis;
+ax([1,2]) = [0.5,length(vehicle_classes)+2.5];
+axis(ax);
+print -dpng '../intx_by_vehicle_normed.png';
+
+
+% Now look at crash locations: intersection vs midblock, by vehicle type
+% Repeat the figures
+intx_by_vehicle_normed = intx_by_vehicle ./ repmat(sum(intx_by_vehicle, 2), [1, 2]);
+bar(intx_by_vehicle_normed, 'stacked');
+title('Crash occurrences by location and vehicle type');
+xlabel('Other vehicle involved');
+% convert the speeds from numbers to a cell array of strings, and use as
+% the tick labels
+set(gca, 'xticklabel', vehicle_classes)
+ylabel('Proportion');
+legend({'Intersection', 'Midblock'});
+ax = axis;
+ax([1,2]) = [0.5,length(vehicle_classes)+2.5];
+axis(ax);
+print -dpng '../intx_by_vehicle_normed.png';
+
+
+% Repeat the figures
+bar(intx_by_vehicle', 'stacked');
+title('Crash occurrences by location and vehicle type');
+xlabel('Location');
+% convert the speeds from numbers to a cell array of strings, and use as
+% the tick labels
+set(gca, 'xticklabel', {'Intersection', 'Midblock'})
+ylabel('Count');
+legend(vehicle_classes);
+ax = axis;
+ax([1,2]) = [0.5,3.5];
+axis(ax);
+print -dpng '../vehicle_by_intx_normed.png';
+
+
+% Now look at crash locations: intersection vs midblock, by vehicle type
+% Repeat the figures
+vehicle_by_intx_normed = intx_by_vehicle ./ repmat(sum(intx_by_vehicle, 1), [length(vehicle_classes), 1]);
+bar(vehicle_by_intx_normed', 'stacked');
+title('Crash occurrences by location and vehicle type');
+xlabel('Location');
+% convert the speeds from numbers to a cell array of strings, and use as
+% the tick labels
+set(gca, 'xticklabel', {'Intersection', 'Midblock'})
+ylabel('Proportion');
+legend(vehicle_classes);
+ax = axis;
+ax([1,2]) = [0.5,3.5];
+axis(ax);
+print -dpng '../vehicle_by_intx_normed.png';
+
+
+%% Next - by LGA
+metro_inds = strcmp('Metropolitan', {roads.RA_NAME});
+lg_areas = unique({roads(metro_inds).LG_NAME});
+
+count_by_lga = zeros(1, length(lg_areas));
+km_by_lga = zeros(1, length(lg_areas));
+for ii=1:length(lg_areas)
+    count_by_lga(ii) = sum(strcmp(lg_areas{ii}, {crashcsv.LG_NAME}));
+
+    roads_this_lga = find(strcmp(lg_areas{ii}, {roads.LG_NAME}));
+    single_or_left = strcmp('Left', {roads(roads_this_lga).CWY}) | strcmp('Single', {roads(roads_this_lga).CWY});
+    end_km_these_roads = cellfun(@str2double, {roads(roads_this_lga(single_or_left)).END_TRUE_DIST});
+    start_km_these_roads = cellfun(@str2double, {roads(roads_this_lga(single_or_left)).START_TRUE_DIST});
+    
+    km_by_lga(ii) = sum(end_km_these_roads - start_km_these_roads);
+end
+crashes_per_km_lga = count_by_lga ./ km_by_lga;
+
+
+plot(km_by_lga)
+set(gca, 'xticklabel', lg_areas)
+set(gca, 'xtick', 1:length(lg_areas))
