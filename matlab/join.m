@@ -23,7 +23,6 @@ all_speeds_roads = {speedscsv.ROAD};
 all_speeds_start_slk = cellfun(@str2double, {speedscsv.START_SLK});
 all_speeds_end_slk = cellfun(@str2double, {speedscsv.END_SLK});
 
-
 for ii=1:length(crashcsv)
     road_no = crashcsv(ii).Road_No;
     crash_slk = str2double(crashcsv(ii).SLK);
@@ -37,6 +36,8 @@ for ii=1:length(crashcsv)
     found = crash_slk >= all_roads_start_slk(roads_inds) & crash_slk <= all_roads_end_slk(roads_inds);    
     
     crashcsv(ii).ROAD_HIERARCHY = roads(roads_inds(found)).ROAD_HIERARCHY;
+    % local government name
+    crashcsv(ii).LG_NAME = roads(roads_inds(found)).LG_NAME;
     
     % Similarly we want to do a join on crash.Road_No = speeds.Road and on
     % crash.SLK >= speeds.START_SLK  and crash.SLK <= speeds.END_SLK
@@ -46,5 +47,4 @@ for ii=1:length(crashcsv)
     found = crash_slk >= all_speeds_start_slk(speeds_inds) & crash_slk <= all_speeds_end_slk(speeds_inds);    
     
     crashcsv(ii).SPLI_SPEED_LIMIT = speedscsv(speeds_inds(found)).SPLI_SPEED_LIMIT;
-
 end    

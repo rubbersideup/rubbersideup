@@ -128,9 +128,8 @@ function addMarker(i, map, infowindow)
              '<br>Severity: ' + data[i][3] + 
              '<br>' + data[i][10] + 'km to PSP' + 
              '<br>' + data[i][11] + 'km to PBN' + 
-             '<br>' + data[i][12] + 'km to shared path' +
-             '<br>' + data[i][13] + 
-             ', ' + data[i][14] + 'km/h zone'
+             //'<br>' + data[i][12] + 'km to shared path' +
+             '<br>' + data[i][14] + 'km/h zone ' + data[i][13]
              );
              infowindow.open(map, marker);
          }
@@ -431,37 +430,48 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </script>
   </head>
   <body>
-  <div id="title"><font size="24">Rubber Side Up</font><br><font size="4"><a href="stats.html">See collated stats here!</a></font></div>
+  <div id="title"><font size="24">Rubber Side Up</font><br><font size="4"><a href="index.html">Click for project and data info</a></font></div>
   <div id="govhack"><font size="6">GovHack 2015</font></div>
     <div id="panel">
-      <button onclick="showVehicleIcons()" >View icons by vehicle</button>
-      <button onclick="toggleTruck()"       id="btnTruck">Toggle truck</button>
-      <button onclick="toggleMotorcycle()"  id="btnMotorcycle">Toggle motorcycle</button>
-      <button onclick="togglePedestrian()"  id="btnPedestrian">Toggle pedestrian</button>
-      <button onclick="toggleOther()"       id="btnOther">Toggle other</button>
-      <button onclick="toggleAnimal()"      id="btnAnimal">Toggle animal</button>
-      <button onclick="toggleBikeOnly()"    id="btnBikeOnly">Toggle bike only</button>
+      <button onclick="showVehicleIcons()" >View icons by vehicle:</button>
+      <input type="checkbox" checked onclick="toggleTruck()"       id="btnTruck">Trucks</input>
+      <input type="checkbox" checked onclick="toggleMotorcycle()"  id="btnMotorcycle">Motorcycles</input>
+      <input type="checkbox" checked onclick="togglePedestrian()"  id="btnPedestrian">Pedestrians</input>
+      <input type="checkbox" checked onclick="toggleAnimal()"      id="btnAnimal">Animal</input>
+      <input type="checkbox" checked onclick="toggleOther()"       id="btnOther">Other</input>
+      <input type="checkbox" checked onclick="toggleBikeOnly()"    id="btnBikeOnly">Bike only</input>
       <p>
       <button onclick="showSeverityIcons()" >View icons by severity</button>
-      <button onclick="toggleFatal()"       id="btnFatal">Toggle fatal</button>
-      <button onclick="toggleHospital()"    id="btnHospital">Toggle hospital</button>
-      <button onclick="toggleMedical()"     id="btnMedical">Toggle medical</button>
-      <button onclick="toggleProperty()"    id="btnProperty">Toggle property</button>
-      <button onclick="toggleUnknown()"     id="btnUnknown">Toggle unknown</button>
+      <input type="checkbox" checked onclick="toggleFatal()"       id="btnFatal">Fatal</input>
+      <input type="checkbox" checked onclick="toggleHospital()"    id="btnHospital">Hospital</input>
+      <input type="checkbox" checked onclick="toggleMedical()"     id="btnMedical">Medical</input>
+      <input type="checkbox" checked onclick="toggleProperty()"    id="btnProperty">Property</input>
+      <input type="checkbox" checked onclick="toggleUnknown()"     id="btnUnknown">Unknown</input>
       <p>
       Toggle speed limit:
-      <button onclick="toggle10kmh()"       >10km/h</button>
-      <button onclick="toggle30kmh()"       >30km/h</button>
-      <button onclick="toggle40kmh()"       >40km/h</button>
-      <button onclick="toggle50kmh()"       >50km/h</button>
-      <button onclick="toggle60kmh()"       >60km/h</button>
-      <button onclick="toggle70kmh()"       >70km/h</button>
-      <button onclick="toggle80kmh()"       >80km/h</button>
-      <button onclick="toggle90kmh()"       >90km/h</button>
-      <button onclick="toggle100kmh()"      >100km/h</button>
-      <button onclick="toggle110kmh()"      >110km/h</button>
-      <button onclick="toggleunkkmh()"      >Other</button>
+      <input type="checkbox" checked onclick="toggle10kmh()"       >10km/h</input>
+      <input type="checkbox" checked onclick="toggle30kmh()"       >30km/h</input>
+      <input type="checkbox" checked onclick="toggle40kmh()"       >40km/h</input>
+      <input type="checkbox" checked onclick="toggle50kmh()"       >50km/h</input>
+      <input type="checkbox" checked onclick="toggle60kmh()"       >60km/h</input>
+      <input type="checkbox" checked onclick="toggle70kmh()"       >70km/h</input>
+      <input type="checkbox" checked onclick="toggle80kmh()"       >80km/h</input>
+      <input type="checkbox" checked onclick="toggle90kmh()"       >90km/h</input>
+      <input type="checkbox" checked onclick="toggle100kmh()"      >100km/h</input>
+      <input type="checkbox" checked onclick="toggle110kmh()"      >110km/h</input>
+      <input type="checkbox" checked onclick="toggleunkkmh()"      >Other</input>
     </div>
     <div id="map-canvas"></div>
-  </body>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64823447-1', 'auto');
+  ga('send', 'pageview');
+    </script>
+
+</body>
 </html>
