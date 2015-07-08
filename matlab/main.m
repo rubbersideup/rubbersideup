@@ -30,9 +30,6 @@ load roads.mat
 %     plot(pbn_longs{ii}, pbn_lats{ii}, 'k-');
 % end
 
-[shared_lats, shared_longs] = interpolate_routes(shared_lats, shared_longs);
-[psp_lats, psp_longs] = interpolate_routes(psp_lats, psp_longs);
-[pbn_lats, pbn_longs] = interpolate_routes(pbn_lats, pbn_longs);
 
 % Computes the distances of each type of route to the crash sites
 %compute_route_distances;
