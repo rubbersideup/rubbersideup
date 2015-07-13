@@ -1,5 +1,9 @@
 % lats is a cell array, each item is a vector of latitudes for a given
-% path.
+% path. Similarly for longs.
+% The route files were taken from .shp files from the Department
+% of Transport, converted to KML (e.g. in ArcMap). Only lines with
+% <coordinates> tags were kept, the tags were then removed and the Z
+% coordinates removed.
 
 function [lats, longs] = loadroutes(filename)
 
