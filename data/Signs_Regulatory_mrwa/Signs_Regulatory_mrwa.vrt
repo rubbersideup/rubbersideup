@@ -1,0 +1,36 @@
+<OGRVRTDataSource>
+    <OGRVRTLayer name="Signs_Regulatory_mrwa">
+    <SrcDataSource relativeToVRT="1">Signs_Regulatory_mrwa.csv</SrcDataSource>
+    <GeometryType>wkbPoint</GeometryType>
+    <LayerSRS>WGS84</LayerSRS>
+    <GeometryField reportSrcColumn="false" encoding= "WKT" field="WKT"/> 
+      <Field name="ROAD" src="ROAD" type="String" />
+      <Field name="ROAD_NAME" src="ROAD_NAME" type="String" />
+      <Field name="COMMON_USAGE_NAME" src="COMMON_USAGE_NAME" type="String" />
+      <Field name="SLK" src="SLK" type="Integer" />
+      <Field name="CWY" src="CWY" type="String" />
+      <Field name="TRUE_DIST" src="TRUE_DIST" type="Integer" />
+      <Field name="NETWORK_TYPE" src="NETWORK_TYPE" type="String" />
+      <Field name="RA_NO" src="RA_NO" type="String" />
+      <Field name="RA_NAME" src="RA_NAME" type="String" />
+      <Field name="LG_NO" src="LG_NO" type="String" />
+      <Field name="LG_NAME" src="LG_NAME" type="String" />
+      <Field name="XSP" src="XSP" type="String" />
+      <Field name="DATE_APPROVED" src="DATE_APPROVED" type="Integer" />
+      <Field name="DATE_INSTALLED" src="DATE_INSTALLED" type="Integer" />
+      <Field name="ASSET_NO" src="ASSET_NO" type="String" />
+      <Field name="PANEL_COUNT" src="PANEL_COUNT" type="Integer" />
+      <Field name="PANEL_01_DESIGN" src="PANEL_01_DESIGN" type="String" />
+      <Field name="PANEL_01_DESIGN_MEANING" src="PANEL_01_DESIGN_MEANING" type="String" />
+      <Field name="PANEL_02_DESIGN" src="PANEL_02_DESIGN" type="String" />
+      <Field name="PANEL_02_DESIGN_MEANING" src="PANEL_02_DESIGN_MEANING" type="String" />
+      <Field name="PANEL_03_DESIGN" src="PANEL_03_DESIGN" type="String" />
+      <Field name="PANEL_03_DESIGN_MEANING" src="PANEL_03_DESIGN_MEANING" type="String" />
+      <Field name="PANEL_04_DESIGN" src="PANEL_04_DESIGN" type="String" />
+      <Field name="PANEL_04_DESIGN_MEANING" src="PANEL_04_DESIGN_MEANING" type="String" />
+      <Field name="LATITUDE" src="LATITUDE" type="Integer" />
+      <Field name="LONGITUDE" src="LONGITUDE" type="Integer" />
+      <Field name="REGULATORY_SIGN_TYPE" src="REGULATORY_SIGN_TYPE" type="String" />
+      <Field name="ROUTE_NE_ID" src="ROUTE_NE_ID" type="Integer" />
+    </OGRVRTLayer>
+</OGRVRTDataSource>
