@@ -11,7 +11,9 @@ end
 % There are no recorded cases where multiple other vehicle types were
 % involved.
 % These are all row vectors
-vs_truck = ~cellfun(@isempty, {crashcsv.Total_Truck}) & ~cellfun(@isempty, {crashcsv.Total_Heavy_Truck});
+% I think that all heavy trucks are also marked as trucks, but here we
+% check that it's either a truck or a heavy truck.
+vs_truck = ~cellfun(@isempty, {crashcsv.Total_Truck}) | ~cellfun(@isempty, {crashcsv.Total_Heavy_Truck});
 vs_motorcycle = ~cellfun(@isempty, {crashcsv.Total_Motor_Cycle});
 vs_pedestrian = ~cellfun(@isempty, {crashcsv.Total_Pedestrian});
 vs_other = ~cellfun(@isempty, {crashcsv.Total_Others_Vehicles});
@@ -106,7 +108,7 @@ ax([1,2]) = [0.5,length(severity_legend)+1.5];
 axis(ax);
 % Save the figure as a PNG
 print -dpng '../speed_vs_severity.png';
-dumpcsv('../speed_vs_severity.csv', severity_legend, speed_legend, speed_vs_severity');
+dumpcsv('../speed_vs_severity.csv', speed_legend, severity_legend, speed_vs_severity);
 
 bar(speed_vs_vehicle, 'stacked');
 title('Crash occurrences by speed limit zone and vehicle');
@@ -121,7 +123,7 @@ ax([1,2]) = [0.5,length(vehicle_legend)+2.5];
 axis(ax);
 % Save the figure as a PNG
 print -dpng '../speed_vs_vehicle.png';
-dumpcsv('../speed_vs_vehicle.csv', vehicle_legend, speed_legend, speed_vs_vehicle');
+dumpcsv('../speed_vs_vehicle.csv', speed_legend, vehicle_legend, speed_vs_vehicle);
 
 % These are normed by speed limit, so very low or very high speed limit
 % zones that do not have a lot of data can be visualised.
