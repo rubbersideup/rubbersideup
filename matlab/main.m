@@ -83,5 +83,12 @@ join;
 % the map
 savejs;
 
+% Dump some info to the console on crash hotspots, this info is manually 
+% pasted into the web page.
+multiple_crash_locations;
+
 % Generates stats, saves them as PNG figures and CSV files
 savestats;
+
+% Similar, but restricts the stats to the PBN
+savepbnstats;
