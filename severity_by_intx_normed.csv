@@ -1,6 +1,6 @@
 ,Fatal,Hospital,Medical,Property
-Traffic lights,0.0064,0.1606,0.2527,0.5803
-Roundabout,0.0020,0.1403,0.3727,0.4850
-Stop sign,0.0000,0.1742,0.3123,0.5135
-Other intersection,0.0049,0.1808,0.2913,0.5231
+Traffic lights,0.0067,0.1607,0.2411,0.5915
+Roundabout,0.0020,0.1394,0.3745,0.4841
+Stop sign,0.0000,0.1731,0.3134,0.5134
+Other intersection,0.0048,0.1814,0.2947,0.5191
 Midblock,0.0104,0.1600,0.2639,0.5658

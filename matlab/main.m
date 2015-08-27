@@ -23,8 +23,12 @@ load roads.mat
 % trafficlights = loadcsv('../data/Traffic_Signals_mrwa/Traffic_Signals_latlong.csv');
 % lights_lat = cellfun(@str2double, {trafficlights.IIT_LATITUDE});
 % lights_long = cellfun(@str2double, {trafficlights.IIT_LONGITUDE});
-% valid_lights = ~strcmp('DECOMMISSIONED', {trafficlights.Signal_Type_NotUsed}) & ~isempty({trafficlights.Signal_Type_NotUsed}) & ...
-%     ~isnan(lights_lat) & ~isnan(lights_long);
+% % If the signal type is not DECOMMISSIONED and the coordinates are valid
+% % and the lights have a commissioning date, they are good.
+% % Note that the spreadsheet contains some lights that are planned but not
+% % yet commissioned.
+% valid_lights = (~strcmp('DECOMMISSIONED', {trafficlights.Signal_Type_NotUsed}) & ~cellfun(@isempty, {trafficlights.Signal_Type_NotUsed}) & ...
+%     ~isnan(lights_lat) & ~isnan(lights_long)) & ~cellfun(@isempty, {trafficlights.IIT_DATE_COMMISSIONED});
 % lights_lat = lights_lat(valid_lights);
 % lights_long = lights_long(valid_lights);
 % clear valid_lights;
